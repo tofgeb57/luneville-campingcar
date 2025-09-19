@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Spots camping-car autour de Lunéville</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+e2m0w4b0tYIY2gC3sGZ+3t/0s9gqZf1h1x0+0q+k=" crossorigin=""/>
+  <style>
+    #map { height: 90vh; width: 100%; }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    .info { padding:8px; }
+  </style>
+</head>
+<body>
+  <div class="info">
+    <h2>Spots nature & aires camping-car autour de Lunéville</h2>
+    <p>Clique sur un marqueur pour voir le détail. Distances approximatives depuis Lunéville.</p>
+  </div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o9N1j7k9b0s9gqZf1h1x0+0q+k=" crossorigin=""></script>
+  <script>
+    var map = L.map('map').setView([48.5894, 6.5017], 11); // centre Lunéville
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var spots = [
+      {
+        name: "Château & Jardin des Bosquets (Lunéville)",
+        coords: [48.5902, 6.4888],
+        desc: "Parc de 21 ha, promenades faciles. Idéal pour une balade courte avec chiens (laisse recommandée en certaines zones). Proche de l'aire camping-car 'Les Bosquets'."
+      },
+      {
+        name: "Forêt domaniale de Mondon / Moncel-lès-Lunéville",
+        coords: [48.5732, 6.5292],
+        desc: "Grande forêt avec plusieurs boucles de randonnée, étangs et zones ombragées — parfait pour de longues promenades avec chiens."
+      },
+      {
+        name: "Petit étang René Boury (Moncel)",
+        coords: [48.55218, 6.549],
+        desc: "Étang tranquille et zones de balade autour de Moncel-lès-Lunéville. Prendre garde aux règlementations locales sur la baignade des chiens."
+      },
+      {
+        name: "Aire camping-car - Blainville-sur-l'Eau",
+        coords: [48.55732, 6.40583],
+        desc: "Aire en bord de Meurthe (services), chemins ombragés, point de départ pour randos locales et Espace Naturel Sensible à ~200 m."
+      },
+      {
+        name: "Camping municipal Grand Breuil - Parroy",
+        coords: [48.6791, 6.5894],
+        desc: "Camping calme, cadre champêtre, près d'étangs et sentiers. Convient pour une halte nature avec chiens."
+      },
+      {
+        name: "Lac de Pierre-Percée",
+        coords: [48.467, 6.909],
+        desc: "Beau plan d'eau (environ 40–60 min en voiture selon route). Super pour chiens qui aiment l'eau — vérifier les panneaux locaux."
+      }
+    ];
+
+    spots.forEach(function(s){
+      var marker = L.marker(s.coords).addTo(map);
+      marker.bindPopup('<b>' + s.name + '</b><br>' + s.desc);
+    });
+
+    // Cercle centre Lunéville
+    L.circle([48.5894, 6.5017], {
+      radius: 300,
+      color: 'blue',
+      fillOpacity: 0.05
+    }).addTo(map).bindPopup('Centre de Lunéville (repère)');
+  </script>
+</body>
+</html>
